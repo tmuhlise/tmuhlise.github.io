@@ -16,7 +16,7 @@ import numpy as np
 app = Flask(__name__)
 
 # Modeli yükleyin
-model = joblib.load('model.pkl')
+model = joblib.load('lgbm_glucose_model.pkl')
 
 @app.route('/')
 def home():
