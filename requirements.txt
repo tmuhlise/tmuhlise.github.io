@@ -1,10 +1,7 @@
 Flask==1.1.2
-joblib
 numpy
-lazypredict
 scikit-learn==0.23.0
 pandas==1.1.3
-lightgbm
 pickle4
 gunicorn
 requests==2.24.0
