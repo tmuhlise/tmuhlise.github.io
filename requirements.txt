@@ -2,3 +2,6 @@ Flask
 joblib
 numpy
 lazypredict
+scikit-learn
+pandas
+lightgbm
