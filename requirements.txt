@@ -8,3 +8,11 @@ gunicorn
 matplotlib
 requests==2.24.0
 setuptools < 36
+
+Flask==3.1.0
+joblib==1.4.2
+lazypredict==0.2.13
+lightgbm==4.6.0
+numpy==2.2.3
+tensorflow==2.18.0
+tensorflow_intel==2.18.0
