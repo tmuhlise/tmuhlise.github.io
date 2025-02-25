@@ -7,3 +7,4 @@ pickle4
 gunicorn
 matplotlib
 requests==2.24.0
+setuptools < 36
