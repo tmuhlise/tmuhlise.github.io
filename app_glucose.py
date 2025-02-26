@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Load the trained model
+# Modeli yükle
 model = pickle.load(open('lgbm_glucose_model.pkl', 'rb'))
 
 @app.route('/')
@@ -14,27 +14,28 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
-        # Get inputs from the form
-        age = int(request.form['age'])            # Age input
-        hba1c = float(request.form['hba1c'])      # HbA1c input
-        gender = request.form['gender']           # Gender input ("Male" or "Female")
+        # Kullanıcıdan alınan girişleri al
+        age = float(request.form['age'])
+        hba1c = float(request.form['hba1c'])
+        gender = request.form['gender']
 
-        # Convert Gender to a numerical value (1 for Woman, 0 for Man)
-        gender_woman = 1 if gender == "Female" else 0  
+        # Kadın = 1, Erkek = 0 olarak kodlayalım
+        gender_woman = 1 if gender == "Female" else 0
 
-        # Prepare input array (matching model feature order: Age, HbA1c, Gender_woman)
-        features = np.array([[age, hba1c, gender_woman]])  # Shape (1, 3)
+        # Model için giriş dizisini oluştur
+        features = np.array([[age, hba1c, gender_woman]])
 
-        # Make prediction
-        prediction = model.predict(features)
+        # Model tahmini yap (log[Glucose])
+        log_glucose_pred = model.predict(features)[0]
 
-        # Format output
-        prediction_text = f"Predicted Value: {prediction[0]:.2f}"
+        # Normal Glucose değerine dönüştür (anti-log)
+        glucose_pred = 10 ** log_glucose_pred
 
-        return render_template('index.html', prediction_text=prediction_text)
+        # Kullanıcıya sonucu göster
+        return render_template('index.html', prediction_text=f'Predicted Glucose Level: {glucose_pred:.2f} mg/dL')
 
     except Exception as e:
-        return render_template('index.html', prediction_text=f"Error: {str(e)}")
+        return render_template('index.html', prediction_text=f'Error: {str(e)}')
 
 if __name__ == '__main__':
     app.run(debug=True)
