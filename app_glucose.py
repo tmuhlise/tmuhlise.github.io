@@ -1,4 +1,3 @@
-
 import numpy as np
 import pickle
 from flask import Flask, render_template, request
@@ -16,20 +15,20 @@ def home():
 def predict():
     try:
         # Get inputs from the form
-        glucose = float(request.form['feature1'])  # Glucose value
-        age = int(request.form['age'])            # Age value
-        gender = request.form['gender']           # Gender value ("Male" or "Female")
+        age = int(request.form['age'])            # Age input
+        hba1c = float(request.form['hba1c'])      # HbA1c input
+        gender = request.form['gender']           # Gender input ("Male" or "Female")
 
-        # Convert Gender to a numerical value (if your model was trained this way)
-        gender_numeric = 1 if gender == "Male" else 0  # Male → 1, Female → 0
+        # Convert Gender to a numerical value (1 for Woman, 0 for Man)
+        gender_woman = 1 if gender == "Female" else 0  
 
-        # Prepare the input data (3 features)
-        features = np.array([[glucose, age, gender_numeric]])  # Shape (1, 3)
+        # Prepare input array (matching model feature order: Age, HbA1c, Gender_woman)
+        features = np.array([[age, hba1c, gender_woman]])  # Shape (1, 3)
 
-        # Make the prediction
+        # Make prediction
         prediction = model.predict(features)
 
-        # Format the prediction output
+        # Format output
         prediction_text = f"Predicted Value: {prediction[0]:.2f}"
 
         return render_template('index.html', prediction_text=prediction_text)
@@ -39,4 +38,3 @@ def predict():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
