@@ -29,7 +29,7 @@ def predict():
         log_glucose_pred = model.predict(features)[0]
 
         # Normal Glucose değerine dönüştür (anti-log)
-        glucose_pred = 10 ** log_glucose_pred
+        glucose_pred = np.exp(log_glucose_pred)
 
         # Kullanıcıya sonucu göster
         return render_template('index.html', prediction_text=f'Predicted Glucose Level: {glucose_pred:.2f} mg/dL')
