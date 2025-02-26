@@ -4,41 +4,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glucose Prediction</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 50%;
+            padding: 20px;
+        }
+        .image-container {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
-    <h1>Glucose Prediction App</h1>
 
-    <form action="/predict" method="post">
-        <!-- Age Input -->
-        <label for="age">Enter Age:</label>
-        <input type="number" name="age" id="age" placeholder="Enter Age" required>
+    <div class="container">
+        <h1>Glucose Prediction App</h1>
+        <form action="/predict" method="post">
+            <input type="text" name="Age" placeholder="Enter Age" required><br><br>
+            <input type="text" name="HbA1c" placeholder="Enter HbA1c value" required><br><br>
+            <select name="Gender">
+                <option value="1">Woman</option>
+                <option value="0">Man</option>
+            </select><br><br>
+            <button type="submit">Predict</button>
+        </form>
         <br><br>
+        <h4 style="color:green;">
+            {% if prediction_text %}
+                {{ prediction_text }}
+            {% endif %}
+        </h4>
+    </div>
 
-        <!-- HbA1c Input -->
-        <label for="hba1c">Enter HbA1c Value:</label>
-        <input type="text" name="hba1c" id="hba1c" placeholder="Enter HbA1c Value" required>
-        <br><br>
+    <div class="image-container">
+        <img src="{{ url_for('static', filename='glucose_meter.jpeg') }}" alt="Glucose Meter">
+    </div>
 
-        <!-- Gender Selection -->
-        <label for="gender">Select Gender:</label>
-        <select name="gender" id="gender" required>
-            <option value="">--Select--</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-        </select>
-        <br><br>
-
-        <!-- Submit Button -->
-        <button type="submit">Predict</button>
-    </form>
-
-    <br><br>
-
-    <!-- Display Prediction Result -->
-    <h4 style="color:green;">
-        {% if prediction_text %}
-            {{ prediction_text }}
-        {% endif %}
-    </h4>
 </body>
 </html>
