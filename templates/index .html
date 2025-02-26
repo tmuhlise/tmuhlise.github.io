@@ -9,14 +9,24 @@
     <h1>Glucose Prediction App</h1>
     <form action="/predict" method="post">
         <input type="text" name="feature1" placeholder="Enter Glucose value" required>
+        <br><br>
+        <input type="number" name="age" placeholder="Enter Age" required>
+        <br><br>
+        <label for="gender">Select Gender:</label>
+        <select name="gender" id="gender" required>
+            <option value="">--Select--</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+        <br><br>
         <button type="submit">Predict</button>
     </form>
-    <br>
-    <br>
+    <br><br>
     <h4 style="color:green;">
-    {% if prediction_text %}
-        {{ prediction_text }}
-    {% endif %}
+        {% if prediction_text %}
+            {{ prediction_text }}
+        {% endif %}
     </h4>
 </body>
 </html>
+
